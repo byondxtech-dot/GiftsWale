@@ -1,13 +1,57 @@
 import { useState } from "react";
+import axios from "axios";
+import { backendUrl } from "../App";
+
 
 const Login = () => {
     const [currentState, setCurrentState] = useState('Login');
     const [isHovered, setIsHovered] = useState(false);
+    const [name, setName] = useState('') ;
+    const [email, setEmail] = useState('') ;
+    const [password, setPassword] = useState('') ;
 
-    const onSubmitHandler = (e) => {
-        e.preventDefault();
-        console.log(`${currentState} submitted`);
+   const onSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+        let res;
+
+        if (currentState === "Sign Up") {
+            // SIGN UP
+            res = await axios.post(
+                backendUrl + "/api/user/register",
+                { name, email, password }
+            );
+            console.log(res);
+            
+        } else {
+            // LOGIN
+            res = await axios.post(
+                backendUrl + "/api/user/login",
+                { email, password }
+            );
+        }
+
+        if (res.data.success) {
+            // ✅ AUTH SUCCESS
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("isAuth", "true");
+            alert("signup Succesfull")
+
+            console.log(`${currentState} success`);
+        } else {
+            console.log(res.data.msg);
+            alert(res.data.msg)
+        }
+
+    } catch (error) {
+        console.log(
+            "authError",
+            error.response?.data || error.message
+        );
     }
+};
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
@@ -41,6 +85,8 @@ const Login = () => {
                             <div className="group">
                                 <input 
                                     type="text" 
+                                     onChange={(e)=>{setName(e.target.value)
+                                }}
                                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl 
                                              transition-all duration-300 
                                              focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400
@@ -59,6 +105,8 @@ const Login = () => {
                         <div className="group">
                             <input 
                                 type="email" 
+                                 onChange={(e)=>{setEmail(e.target.value)
+                                }}
                                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl 
                                          transition-all duration-300 
                                          focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400
@@ -66,6 +114,8 @@ const Login = () => {
                                          placeholder:text-gray-400"
                                 placeholder="Email address" 
                                 required 
+                               
+                                
                             />
                             <div className="mt-1 text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 We'll never share your email
@@ -76,6 +126,8 @@ const Login = () => {
                         <div className="group">
                             <input 
                                 type="password" 
+                                 onChange={(e)=>{setPassword(e.target.value)
+                                }}
                                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl 
                                          transition-all duration-300 
                                          focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400

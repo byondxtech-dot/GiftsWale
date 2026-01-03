@@ -41,7 +41,10 @@ const loginUser = async(req, res) =>{
 const registerUser = async(req, res) =>{
 
     try {
+        
+        
         const {name, email, password} = req.body ;
+        
         const exist = await userModel.findOne({email})  ;
         if (exist) {
             return res.json({success:false , msg:`user already exist this email`}) ;
@@ -65,9 +68,8 @@ const registerUser = async(req, res) =>{
         
         }) ;
 
-        // const user = await newUser.save() ;
-        console.log(newUser,"this is userDetails");
-    
+        const user = await newUser.save() ;
+        // console.log(newUser,"this is userDetails");
        const token =  createToken(user._id) ;
        res.json({success:true, token}) ;
 
