@@ -1,61 +1,16 @@
-# 🎁 GiftsWale
+# React + Vite
 
-An e-commerce platform for gifts and personalized items.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 📁 Project Structure
+Currently, two official plugins are available:
 
-```
-GiftsWale/
-├── frontend/          # React + Vite frontend
-└── backened/          # Express.js backend
-```
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 🚀 Tech Stack
+## React Compiler
 
-### Frontend
-- React 19
-- Vite 7
-- Tailwind CSS 4
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### Backend
-- Express.js 5
-- MongoDB (Mongoose)
-- JWT Authentication
-- Cloudinary (Image uploads)
-- Multer (File handling)
+## Expanding the ESLint configuration
 
-## 🛠️ Getting Started
-
-### Prerequisites
-- Node.js 18+
-- MongoDB
-
-### Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-### Backend Setup
-```bash
-cd backened
-npm install
-# Create .env file with required variables
-npm start
-```
-
-## 📝 Environment Variables
-
-### Backend (.env)
-```
-MONGODB_URI=your_mongodb_uri
-JWT_SECRET=your_jwt_secret
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-```
-
-## 📄 License
-
-ISC
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
