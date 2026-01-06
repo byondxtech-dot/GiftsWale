@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import AdminLayout from '../../components/admin/AdminLayout';
 
 const Enquiry = () => {
   const [enquiries, setEnquiries] = useState([
@@ -46,159 +45,157 @@ const Enquiry = () => {
   };
 
   return (
-    <AdminLayout>
-      <div className="enquiry-page">
-        <div className="enquiry-header">
-          <div>
-            <h2>Customer Enquiries</h2>
-            <p>{enquiries.filter(e => e.status === 'Open').length} open enquiries</p>
-          </div>
+    <div className="enquiry-page">
+      <div className="enquiry-header">
+        <div>
+          <h2>Customer Enquiries</h2>
+          <p>{enquiries.filter(e => e.status === 'Open').length} open enquiries</p>
         </div>
+      </div>
 
-        {/* Stats */}
-        <div className="enquiry-stats">
-          <div className="stat-card">
-            <div className="stat-icon blue">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 6v6l4 2" />
-              </svg>
-            </div>
-            <span className="stat-number">{enquiries.filter(e => e.status === 'Open').length}</span>
-            <span className="stat-label">Open</span>
+      {/* Stats */}
+      <div className="enquiry-stats">
+        <div className="stat-card">
+          <div className="stat-icon blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 6v6l4 2" />
+            </svg>
           </div>
-          <div className="stat-card">
-            <div className="stat-icon orange">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
-              </svg>
-            </div>
-            <span className="stat-number">{enquiries.filter(e => e.status === 'In Progress').length}</span>
-            <span className="stat-label">In Progress</span>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon green">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                <polyline points="22 4 12 14.01 9 11.01" />
-              </svg>
-            </div>
-            <span className="stat-number">{enquiries.filter(e => e.status === 'Resolved').length}</span>
-            <span className="stat-label">Resolved</span>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon red">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                <line x1="12" y1="9" x2="12" y2="13" />
-                <line x1="12" y1="17" x2="12.01" y2="17" />
-              </svg>
-            </div>
-            <span className="stat-number">{enquiries.filter(e => e.priority === 'High').length}</span>
-            <span className="stat-label">High Priority</span>
-          </div>
+          <span className="stat-number">{enquiries.filter(e => e.status === 'Open').length}</span>
+          <span className="stat-label">Open</span>
         </div>
+        <div className="stat-card">
+          <div className="stat-icon orange">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+            </svg>
+          </div>
+          <span className="stat-number">{enquiries.filter(e => e.status === 'In Progress').length}</span>
+          <span className="stat-label">In Progress</span>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          </div>
+          <span className="stat-number">{enquiries.filter(e => e.status === 'Resolved').length}</span>
+          <span className="stat-label">Resolved</span>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon red">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <span className="stat-number">{enquiries.filter(e => e.priority === 'High').length}</span>
+          <span className="stat-label">High Priority</span>
+        </div>
+      </div>
 
-        {/* Filter */}
-        <div className="enquiry-filter">
-          {['all', 'open', 'in-progress', 'resolved'].map((status) => (
-            <button
-              key={status}
-              className={`filter-btn ${filterStatus === status ? 'active' : ''}`}
-              onClick={() => setFilterStatus(status)}
+      {/* Filter */}
+      <div className="enquiry-filter">
+        {['all', 'open', 'in-progress', 'resolved'].map((status) => (
+          <button
+            key={status}
+            className={`filter-btn ${filterStatus === status ? 'active' : ''}`}
+            onClick={() => setFilterStatus(status)}
+          >
+            {status === 'in-progress' ? 'In Progress' : status.charAt(0).toUpperCase() + status.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      <div className="enquiry-container">
+        {/* Enquiry List */}
+        <div className="enquiry-list">
+          {filteredEnquiries.map((enquiry) => (
+            <div
+              key={enquiry.id}
+              className={`enquiry-card ${selectedEnquiry?.id === enquiry.id ? 'selected' : ''}`}
+              onClick={() => {
+                setSelectedEnquiry(enquiry);
+                console.log('📋 Enquiry selected:', enquiry);
+              }}
             >
-              {status === 'in-progress' ? 'In Progress' : status.charAt(0).toUpperCase() + status.slice(1)}
-            </button>
+              <div className="enquiry-card-header">
+                <div className="enquiry-info">
+                  <span className="enquiry-name">{enquiry.name}</span>
+                  <span className="enquiry-email">{enquiry.email}</span>
+                </div>
+                <span
+                  className="priority-badge"
+                  style={{
+                    background: priorityColors[enquiry.priority.toLowerCase()]?.bg,
+                    color: priorityColors[enquiry.priority.toLowerCase()]?.color
+                  }}
+                >
+                  {enquiry.priority}
+                </span>
+              </div>
+              <div className="enquiry-subject">{enquiry.subject}</div>
+              <div className="enquiry-card-footer">
+                <span
+                  className="status-badge"
+                  style={{
+                    background: statusColors[enquiry.status.toLowerCase().replace(' ', '-')]?.bg,
+                    color: statusColors[enquiry.status.toLowerCase().replace(' ', '-')]?.color
+                  }}
+                >
+                  {enquiry.status}
+                </span>
+                <span className="enquiry-date">{enquiry.date}</span>
+              </div>
+            </div>
           ))}
         </div>
 
-        <div className="enquiry-container">
-          {/* Enquiry List */}
-          <div className="enquiry-list">
-            {filteredEnquiries.map((enquiry) => (
-              <div
-                key={enquiry.id}
-                className={`enquiry-card ${selectedEnquiry?.id === enquiry.id ? 'selected' : ''}`}
-                onClick={() => {
-                  setSelectedEnquiry(enquiry);
-                  console.log('📋 Enquiry selected:', enquiry);
-                }}
+        {/* Enquiry Detail */}
+        {selectedEnquiry ? (
+          <div className="enquiry-detail">
+            <div className="detail-header">
+              <h3>{selectedEnquiry.subject}</h3>
+              <select
+                value={selectedEnquiry.status}
+                onChange={(e) => handleStatusChange(selectedEnquiry.id, e.target.value)}
+                className="status-select"
               >
-                <div className="enquiry-card-header">
-                  <div className="enquiry-info">
-                    <span className="enquiry-name">{enquiry.name}</span>
-                    <span className="enquiry-email">{enquiry.email}</span>
-                  </div>
-                  <span
-                    className="priority-badge"
-                    style={{
-                      background: priorityColors[enquiry.priority.toLowerCase()]?.bg,
-                      color: priorityColors[enquiry.priority.toLowerCase()]?.color
-                    }}
-                  >
-                    {enquiry.priority}
-                  </span>
-                </div>
-                <div className="enquiry-subject">{enquiry.subject}</div>
-                <div className="enquiry-card-footer">
-                  <span
-                    className="status-badge"
-                    style={{
-                      background: statusColors[enquiry.status.toLowerCase().replace(' ', '-')]?.bg,
-                      color: statusColors[enquiry.status.toLowerCase().replace(' ', '-')]?.color
-                    }}
-                  >
-                    {enquiry.status}
-                  </span>
-                  <span className="enquiry-date">{enquiry.date}</span>
-                </div>
-              </div>
-            ))}
+                <option value="Open">Open</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+              </select>
+            </div>
+            <div className="detail-meta">
+              <span><strong>From:</strong> {selectedEnquiry.name} ({selectedEnquiry.email})</span>
+              <span><strong>Date:</strong> {selectedEnquiry.date}</span>
+            </div>
+            <div className="detail-message">
+              <p>{selectedEnquiry.message}</p>
+            </div>
+            <div className="reply-section">
+              <h4>Reply</h4>
+              <textarea
+                placeholder="Type your reply here..."
+                value={reply}
+                onChange={(e) => setReply(e.target.value)}
+              ></textarea>
+              <button className="send-btn" onClick={handleReply}>
+                Send Reply
+              </button>
+            </div>
           </div>
-
-          {/* Enquiry Detail */}
-          {selectedEnquiry ? (
-            <div className="enquiry-detail">
-              <div className="detail-header">
-                <h3>{selectedEnquiry.subject}</h3>
-                <select
-                  value={selectedEnquiry.status}
-                  onChange={(e) => handleStatusChange(selectedEnquiry.id, e.target.value)}
-                  className="status-select"
-                >
-                  <option value="Open">Open</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Resolved">Resolved</option>
-                </select>
-              </div>
-              <div className="detail-meta">
-                <span><strong>From:</strong> {selectedEnquiry.name} ({selectedEnquiry.email})</span>
-                <span><strong>Date:</strong> {selectedEnquiry.date}</span>
-              </div>
-              <div className="detail-message">
-                <p>{selectedEnquiry.message}</p>
-              </div>
-              <div className="reply-section">
-                <h4>Reply</h4>
-                <textarea
-                  placeholder="Type your reply here..."
-                  value={reply}
-                  onChange={(e) => setReply(e.target.value)}
-                ></textarea>
-                <button className="send-btn" onClick={handleReply}>
-                  Send Reply
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="enquiry-placeholder">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="1.5">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
-              <p>Select an enquiry to view details</p>
-            </div>
-          )}
-        </div>
+        ) : (
+          <div className="enquiry-placeholder">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="1.5">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            <p>Select an enquiry to view details</p>
+          </div>
+        )}
       </div>
 
       <style>{`
@@ -482,7 +479,7 @@ const Enquiry = () => {
           }
         }
       `}</style>
-    </AdminLayout>
+    </div >
   );
 };
 

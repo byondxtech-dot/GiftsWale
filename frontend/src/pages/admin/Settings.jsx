@@ -1,279 +1,276 @@
 import { useState } from 'react';
-import AdminLayout from '../../components/admin/AdminLayout';
 
 const Settings = () => {
-    const [activeTab, setActiveTab] = useState('general');
-    const [settings, setSettings] = useState({
-        siteName: 'GiftsWale',
-        siteEmail: 'admin@giftswale.com',
-        currency: 'INR',
-        timezone: 'Asia/Kolkata',
-        notifications: {
-            emailOrders: true,
-            emailCustomers: true,
-            pushNotifications: false,
-            smsAlerts: false
-        },
-        shipping: {
-            freeShippingThreshold: 500,
-            standardRate: 50,
-            expressRate: 100
-        }
-    });
+  const [activeTab, setActiveTab] = useState('general');
+  const [settings, setSettings] = useState({
+    siteName: 'GiftsWale',
+    siteEmail: 'admin@giftswale.com',
+    currency: 'INR',
+    timezone: 'Asia/Kolkata',
+    notifications: {
+      emailOrders: true,
+      emailCustomers: true,
+      pushNotifications: false,
+      smsAlerts: false
+    },
+    shipping: {
+      freeShippingThreshold: 500,
+      standardRate: 50,
+      expressRate: 100
+    }
+  });
 
-    const handleSave = () => {
-        console.log('💾 Settings saved:', settings);
-        alert('Settings saved successfully!');
-    };
+  const handleSave = () => {
+    console.log('💾 Settings saved:', settings);
+    alert('Settings saved successfully!');
+  };
 
-    const tabs = [
-        { id: 'general', label: 'General', icon: '⚙️' },
-        { id: 'notifications', label: 'Notifications', icon: '🔔' },
-        { id: 'shipping', label: 'Shipping', icon: '🚚' },
-        { id: 'payments', label: 'Payments', icon: '💳' }
-    ];
+  const tabs = [
+    { id: 'general', label: 'General', icon: '⚙️' },
+    { id: 'notifications', label: 'Notifications', icon: '🔔' },
+    { id: 'shipping', label: 'Shipping', icon: '🚚' },
+    { id: 'payments', label: 'Payments', icon: '💳' }
+  ];
 
-    return (
-        <AdminLayout>
-            <div className="settings-page">
-                <div className="settings-header">
-                    <h2>Settings</h2>
-                    <p>Manage your store preferences</p>
+  return (
+    <div className="settings-page">
+      <div className="settings-header">
+        <h2>Settings</h2>
+        <p>Manage your store preferences</p>
+      </div>
+
+      <div className="settings-container">
+        {/* Sidebar Tabs */}
+        <div className="settings-sidebar">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              className={`settings-tab ${activeTab === tab.id ? 'active' : ''}`}
+              onClick={() => {
+                setActiveTab(tab.id);
+                console.log('📑 Tab changed:', tab.id);
+              }}
+            >
+              <span className="tab-icon">{tab.icon}</span>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Content */}
+        <div className="settings-content">
+          {activeTab === 'general' && (
+            <div className="settings-section">
+              <h3>General Settings</h3>
+              <div className="form-group">
+                <label>Site Name</label>
+                <input
+                  type="text"
+                  value={settings.siteName}
+                  onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
+                />
+              </div>
+              <div className="form-group">
+                <label>Admin Email</label>
+                <input
+                  type="email"
+                  value={settings.siteEmail}
+                  onChange={(e) => setSettings({ ...settings, siteEmail: e.target.value })}
+                />
+              </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Currency</label>
+                  <select
+                    value={settings.currency}
+                    onChange={(e) => setSettings({ ...settings, currency: e.target.value })}
+                  >
+                    <option value="INR">INR (₹)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                  </select>
                 </div>
-
-                <div className="settings-container">
-                    {/* Sidebar Tabs */}
-                    <div className="settings-sidebar">
-                        {tabs.map((tab) => (
-                            <button
-                                key={tab.id}
-                                className={`settings-tab ${activeTab === tab.id ? 'active' : ''}`}
-                                onClick={() => {
-                                    setActiveTab(tab.id);
-                                    console.log('📑 Tab changed:', tab.id);
-                                }}
-                            >
-                                <span className="tab-icon">{tab.icon}</span>
-                                {tab.label}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* Content */}
-                    <div className="settings-content">
-                        {activeTab === 'general' && (
-                            <div className="settings-section">
-                                <h3>General Settings</h3>
-                                <div className="form-group">
-                                    <label>Site Name</label>
-                                    <input
-                                        type="text"
-                                        value={settings.siteName}
-                                        onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label>Admin Email</label>
-                                    <input
-                                        type="email"
-                                        value={settings.siteEmail}
-                                        onChange={(e) => setSettings({ ...settings, siteEmail: e.target.value })}
-                                    />
-                                </div>
-                                <div className="form-row">
-                                    <div className="form-group">
-                                        <label>Currency</label>
-                                        <select
-                                            value={settings.currency}
-                                            onChange={(e) => setSettings({ ...settings, currency: e.target.value })}
-                                        >
-                                            <option value="INR">INR (₹)</option>
-                                            <option value="USD">USD ($)</option>
-                                            <option value="EUR">EUR (€)</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Timezone</label>
-                                        <select
-                                            value={settings.timezone}
-                                            onChange={(e) => setSettings({ ...settings, timezone: e.target.value })}
-                                        >
-                                            <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
-                                            <option value="America/New_York">America/New_York (EST)</option>
-                                            <option value="Europe/London">Europe/London (GMT)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {activeTab === 'notifications' && (
-                            <div className="settings-section">
-                                <h3>Notification Preferences</h3>
-                                <div className="toggle-group">
-                                    <div className="toggle-item">
-                                        <div className="toggle-info">
-                                            <span className="toggle-label">Email for new orders</span>
-                                            <span className="toggle-desc">Receive email when a new order is placed</span>
-                                        </div>
-                                        <label className="toggle-switch">
-                                            <input
-                                                type="checkbox"
-                                                checked={settings.notifications.emailOrders}
-                                                onChange={(e) => setSettings({
-                                                    ...settings,
-                                                    notifications: { ...settings.notifications, emailOrders: e.target.checked }
-                                                })}
-                                            />
-                                            <span className="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                    <div className="toggle-item">
-                                        <div className="toggle-info">
-                                            <span className="toggle-label">Email for new customers</span>
-                                            <span className="toggle-desc">Receive email when a new customer registers</span>
-                                        </div>
-                                        <label className="toggle-switch">
-                                            <input
-                                                type="checkbox"
-                                                checked={settings.notifications.emailCustomers}
-                                                onChange={(e) => setSettings({
-                                                    ...settings,
-                                                    notifications: { ...settings.notifications, emailCustomers: e.target.checked }
-                                                })}
-                                            />
-                                            <span className="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                    <div className="toggle-item">
-                                        <div className="toggle-info">
-                                            <span className="toggle-label">Push notifications</span>
-                                            <span className="toggle-desc">Get push notifications on your browser</span>
-                                        </div>
-                                        <label className="toggle-switch">
-                                            <input
-                                                type="checkbox"
-                                                checked={settings.notifications.pushNotifications}
-                                                onChange={(e) => setSettings({
-                                                    ...settings,
-                                                    notifications: { ...settings.notifications, pushNotifications: e.target.checked }
-                                                })}
-                                            />
-                                            <span className="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                    <div className="toggle-item">
-                                        <div className="toggle-info">
-                                            <span className="toggle-label">SMS alerts</span>
-                                            <span className="toggle-desc">Receive SMS for important updates</span>
-                                        </div>
-                                        <label className="toggle-switch">
-                                            <input
-                                                type="checkbox"
-                                                checked={settings.notifications.smsAlerts}
-                                                onChange={(e) => setSettings({
-                                                    ...settings,
-                                                    notifications: { ...settings.notifications, smsAlerts: e.target.checked }
-                                                })}
-                                            />
-                                            <span className="toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {activeTab === 'shipping' && (
-                            <div className="settings-section">
-                                <h3>Shipping Settings</h3>
-                                <div className="form-group">
-                                    <label>Free Shipping Threshold (₹)</label>
-                                    <input
-                                        type="number"
-                                        value={settings.shipping.freeShippingThreshold}
-                                        onChange={(e) => setSettings({
-                                            ...settings,
-                                            shipping: { ...settings.shipping, freeShippingThreshold: e.target.value }
-                                        })}
-                                    />
-                                    <span className="form-hint">Orders above this amount get free shipping</span>
-                                </div>
-                                <div className="form-row">
-                                    <div className="form-group">
-                                        <label>Standard Shipping Rate (₹)</label>
-                                        <input
-                                            type="number"
-                                            value={settings.shipping.standardRate}
-                                            onChange={(e) => setSettings({
-                                                ...settings,
-                                                shipping: { ...settings.shipping, standardRate: e.target.value }
-                                            })}
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Express Shipping Rate (₹)</label>
-                                        <input
-                                            type="number"
-                                            value={settings.shipping.expressRate}
-                                            onChange={(e) => setSettings({
-                                                ...settings,
-                                                shipping: { ...settings.shipping, expressRate: e.target.value }
-                                            })}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {activeTab === 'payments' && (
-                            <div className="settings-section">
-                                <h3>Payment Methods</h3>
-                                <div className="payment-methods">
-                                    <div className="payment-card active">
-                                        <div className="payment-header">
-                                            <span className="payment-icon">💳</span>
-                                            <div className="payment-info">
-                                                <span className="payment-name">Razorpay</span>
-                                                <span className="payment-status">Connected</span>
-                                            </div>
-                                        </div>
-                                        <button className="payment-btn" onClick={() => console.log('📝 Configure Razorpay')}>Configure</button>
-                                    </div>
-                                    <div className="payment-card">
-                                        <div className="payment-header">
-                                            <span className="payment-icon">🏦</span>
-                                            <div className="payment-info">
-                                                <span className="payment-name">Bank Transfer</span>
-                                                <span className="payment-status inactive">Not configured</span>
-                                            </div>
-                                        </div>
-                                        <button className="payment-btn" onClick={() => console.log('📝 Configure Bank Transfer')}>Setup</button>
-                                    </div>
-                                    <div className="payment-card">
-                                        <div className="payment-header">
-                                            <span className="payment-icon">💵</span>
-                                            <div className="payment-info">
-                                                <span className="payment-name">Cash on Delivery</span>
-                                                <span className="payment-status">Enabled</span>
-                                            </div>
-                                        </div>
-                                        <button className="payment-btn" onClick={() => console.log('📝 Configure COD')}>Configure</button>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Save Button */}
-                        <div className="settings-footer">
-                            <button className="save-btn" onClick={handleSave}>
-                                Save Changes
-                            </button>
-                        </div>
-                    </div>
+                <div className="form-group">
+                  <label>Timezone</label>
+                  <select
+                    value={settings.timezone}
+                    onChange={(e) => setSettings({ ...settings, timezone: e.target.value })}
+                  >
+                    <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
+                    <option value="America/New_York">America/New_York (EST)</option>
+                    <option value="Europe/London">Europe/London (GMT)</option>
+                  </select>
                 </div>
+              </div>
             </div>
+          )}
 
-            <style>{`
+          {activeTab === 'notifications' && (
+            <div className="settings-section">
+              <h3>Notification Preferences</h3>
+              <div className="toggle-group">
+                <div className="toggle-item">
+                  <div className="toggle-info">
+                    <span className="toggle-label">Email for new orders</span>
+                    <span className="toggle-desc">Receive email when a new order is placed</span>
+                  </div>
+                  <label className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      checked={settings.notifications.emailOrders}
+                      onChange={(e) => setSettings({
+                        ...settings,
+                        notifications: { ...settings.notifications, emailOrders: e.target.checked }
+                      })}
+                    />
+                    <span className="toggle-slider"></span>
+                  </label>
+                </div>
+                <div className="toggle-item">
+                  <div className="toggle-info">
+                    <span className="toggle-label">Email for new customers</span>
+                    <span className="toggle-desc">Receive email when a new customer registers</span>
+                  </div>
+                  <label className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      checked={settings.notifications.emailCustomers}
+                      onChange={(e) => setSettings({
+                        ...settings,
+                        notifications: { ...settings.notifications, emailCustomers: e.target.checked }
+                      })}
+                    />
+                    <span className="toggle-slider"></span>
+                  </label>
+                </div>
+                <div className="toggle-item">
+                  <div className="toggle-info">
+                    <span className="toggle-label">Push notifications</span>
+                    <span className="toggle-desc">Get push notifications on your browser</span>
+                  </div>
+                  <label className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      checked={settings.notifications.pushNotifications}
+                      onChange={(e) => setSettings({
+                        ...settings,
+                        notifications: { ...settings.notifications, pushNotifications: e.target.checked }
+                      })}
+                    />
+                    <span className="toggle-slider"></span>
+                  </label>
+                </div>
+                <div className="toggle-item">
+                  <div className="toggle-info">
+                    <span className="toggle-label">SMS alerts</span>
+                    <span className="toggle-desc">Receive SMS for important updates</span>
+                  </div>
+                  <label className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      checked={settings.notifications.smsAlerts}
+                      onChange={(e) => setSettings({
+                        ...settings,
+                        notifications: { ...settings.notifications, smsAlerts: e.target.checked }
+                      })}
+                    />
+                    <span className="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'shipping' && (
+            <div className="settings-section">
+              <h3>Shipping Settings</h3>
+              <div className="form-group">
+                <label>Free Shipping Threshold (₹)</label>
+                <input
+                  type="number"
+                  value={settings.shipping.freeShippingThreshold}
+                  onChange={(e) => setSettings({
+                    ...settings,
+                    shipping: { ...settings.shipping, freeShippingThreshold: e.target.value }
+                  })}
+                />
+                <span className="form-hint">Orders above this amount get free shipping</span>
+              </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Standard Shipping Rate (₹)</label>
+                  <input
+                    type="number"
+                    value={settings.shipping.standardRate}
+                    onChange={(e) => setSettings({
+                      ...settings,
+                      shipping: { ...settings.shipping, standardRate: e.target.value }
+                    })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Express Shipping Rate (₹)</label>
+                  <input
+                    type="number"
+                    value={settings.shipping.expressRate}
+                    onChange={(e) => setSettings({
+                      ...settings,
+                      shipping: { ...settings.shipping, expressRate: e.target.value }
+                    })}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'payments' && (
+            <div className="settings-section">
+              <h3>Payment Methods</h3>
+              <div className="payment-methods">
+                <div className="payment-card active">
+                  <div className="payment-header">
+                    <span className="payment-icon">💳</span>
+                    <div className="payment-info">
+                      <span className="payment-name">Razorpay</span>
+                      <span className="payment-status">Connected</span>
+                    </div>
+                  </div>
+                  <button className="payment-btn" onClick={() => console.log('📝 Configure Razorpay')}>Configure</button>
+                </div>
+                <div className="payment-card">
+                  <div className="payment-header">
+                    <span className="payment-icon">🏦</span>
+                    <div className="payment-info">
+                      <span className="payment-name">Bank Transfer</span>
+                      <span className="payment-status inactive">Not configured</span>
+                    </div>
+                  </div>
+                  <button className="payment-btn" onClick={() => console.log('📝 Configure Bank Transfer')}>Setup</button>
+                </div>
+                <div className="payment-card">
+                  <div className="payment-header">
+                    <span className="payment-icon">💵</span>
+                    <div className="payment-info">
+                      <span className="payment-name">Cash on Delivery</span>
+                      <span className="payment-status">Enabled</span>
+                    </div>
+                  </div>
+                  <button className="payment-btn" onClick={() => console.log('📝 Configure COD')}>Configure</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Save Button */}
+          <div className="settings-footer">
+            <button className="save-btn" onClick={handleSave}>
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
         .settings-page {
           display: flex;
           flex-direction: column;
@@ -582,8 +579,8 @@ const Settings = () => {
           }
         }
       `}</style>
-        </AdminLayout>
-    );
+    </div >
+  );
 };
 
 export default Settings;

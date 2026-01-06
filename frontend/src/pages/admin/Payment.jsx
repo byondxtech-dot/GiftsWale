@@ -1,141 +1,138 @@
 import { useState } from 'react';
-import AdminLayout from '../../components/admin/AdminLayout';
 
 const Payment = () => {
-    const [transactions] = useState([
-        { id: 1, transactionId: 'TXN001234', customer: 'Jane Cooper', amount: 2499, method: 'UPI', status: 'Success', date: '2026-01-03 11:30 AM' },
-        { id: 2, transactionId: 'TXN001235', customer: 'Wade Warren', amount: 5670, method: 'Card', status: 'Success', date: '2026-01-03 10:45 AM' },
-        { id: 3, transactionId: 'TXN001236', customer: 'Jenny Wilson', amount: 1899, method: 'UPI', status: 'Pending', date: '2026-01-03 10:20 AM' },
-        { id: 4, transactionId: 'TXN001237', customer: 'Robert Fox', amount: 3450, method: 'Net Banking', status: 'Failed', date: '2026-01-03 09:55 AM' },
-        { id: 5, transactionId: 'TXN001238', customer: 'Emily Davis', amount: 7890, method: 'Card', status: 'Success', date: '2026-01-03 09:30 AM' },
-    ]);
+  const [transactions] = useState([
+    { id: 1, transactionId: 'TXN001234', customer: 'Jane Cooper', amount: 2499, method: 'UPI', status: 'Success', date: '2026-01-03 11:30 AM' },
+    { id: 2, transactionId: 'TXN001235', customer: 'Wade Warren', amount: 5670, method: 'Card', status: 'Success', date: '2026-01-03 10:45 AM' },
+    { id: 3, transactionId: 'TXN001236', customer: 'Jenny Wilson', amount: 1899, method: 'UPI', status: 'Pending', date: '2026-01-03 10:20 AM' },
+    { id: 4, transactionId: 'TXN001237', customer: 'Robert Fox', amount: 3450, method: 'Net Banking', status: 'Failed', date: '2026-01-03 09:55 AM' },
+    { id: 5, transactionId: 'TXN001238', customer: 'Emily Davis', amount: 7890, method: 'Card', status: 'Success', date: '2026-01-03 09:30 AM' },
+  ]);
 
-    const [filterStatus, setFilterStatus] = useState('all');
+  const [filterStatus, setFilterStatus] = useState('all');
 
-    const filteredTransactions = transactions.filter(t =>
-        filterStatus === 'all' || t.status.toLowerCase() === filterStatus
-    );
+  const filteredTransactions = transactions.filter(t =>
+    filterStatus === 'all' || t.status.toLowerCase() === filterStatus
+  );
 
-    const stats = {
-        totalRevenue: transactions.filter(t => t.status === 'Success').reduce((sum, t) => sum + t.amount, 0),
-        pendingAmount: transactions.filter(t => t.status === 'Pending').reduce((sum, t) => sum + t.amount, 0),
-        successRate: Math.round((transactions.filter(t => t.status === 'Success').length / transactions.length) * 100),
-        totalTransactions: transactions.length
-    };
+  const stats = {
+    totalRevenue: transactions.filter(t => t.status === 'Success').reduce((sum, t) => sum + t.amount, 0),
+    pendingAmount: transactions.filter(t => t.status === 'Pending').reduce((sum, t) => sum + t.amount, 0),
+    successRate: Math.round((transactions.filter(t => t.status === 'Success').length / transactions.length) * 100),
+    totalTransactions: transactions.length
+  };
 
-    const statusColors = {
-        success: { bg: '#dcfce7', color: '#16a34a' },
-        pending: { bg: '#fef3c7', color: '#d97706' },
-        failed: { bg: '#fee2e2', color: '#dc2626' }
-    };
+  const statusColors = {
+    success: { bg: '#dcfce7', color: '#16a34a' },
+    pending: { bg: '#fef3c7', color: '#d97706' },
+    failed: { bg: '#fee2e2', color: '#dc2626' }
+  };
 
-    return (
-        <AdminLayout>
-            <div className="payment-page">
-                <div className="payment-header">
-                    <h2>Payments</h2>
-                    <p>Track all payment transactions</p>
-                </div>
+  return (
+    <div className="payment-page">
+      <div className="payment-header">
+        <h2>Payments</h2>
+        <p>Track all payment transactions</p>
+      </div>
 
-                {/* Stats Cards */}
-                <div className="payment-stats">
-                    <div className="payment-stat-card">
-                        <div className="stat-icon green">₹</div>
-                        <div className="stat-info">
-                            <span className="stat-value">₹{stats.totalRevenue.toLocaleString()}</span>
-                            <span className="stat-label">Total Revenue</span>
-                        </div>
-                    </div>
-                    <div className="payment-stat-card">
-                        <div className="stat-icon orange">⏳</div>
-                        <div className="stat-info">
-                            <span className="stat-value">₹{stats.pendingAmount.toLocaleString()}</span>
-                            <span className="stat-label">Pending</span>
-                        </div>
-                    </div>
-                    <div className="payment-stat-card">
-                        <div className="stat-icon blue">📊</div>
-                        <div className="stat-info">
-                            <span className="stat-value">{stats.successRate}%</span>
-                            <span className="stat-label">Success Rate</span>
-                        </div>
-                    </div>
-                    <div className="payment-stat-card">
-                        <div className="stat-icon purple">#</div>
-                        <div className="stat-info">
-                            <span className="stat-value">{stats.totalTransactions}</span>
-                            <span className="stat-label">Transactions</span>
-                        </div>
-                    </div>
-                </div>
+      {/* Stats Cards */}
+      <div className="payment-stats">
+        <div className="payment-stat-card">
+          <div className="stat-icon green">₹</div>
+          <div className="stat-info">
+            <span className="stat-value">₹{stats.totalRevenue.toLocaleString()}</span>
+            <span className="stat-label">Total Revenue</span>
+          </div>
+        </div>
+        <div className="payment-stat-card">
+          <div className="stat-icon orange">⏳</div>
+          <div className="stat-info">
+            <span className="stat-value">₹{stats.pendingAmount.toLocaleString()}</span>
+            <span className="stat-label">Pending</span>
+          </div>
+        </div>
+        <div className="payment-stat-card">
+          <div className="stat-icon blue">📊</div>
+          <div className="stat-info">
+            <span className="stat-value">{stats.successRate}%</span>
+            <span className="stat-label">Success Rate</span>
+          </div>
+        </div>
+        <div className="payment-stat-card">
+          <div className="stat-icon purple">#</div>
+          <div className="stat-info">
+            <span className="stat-value">{stats.totalTransactions}</span>
+            <span className="stat-label">Transactions</span>
+          </div>
+        </div>
+      </div>
 
-                {/* Filter */}
-                <div className="payment-filter">
-                    {['all', 'success', 'pending', 'failed'].map((status) => (
-                        <button
-                            key={status}
-                            className={`filter-btn ${filterStatus === status ? 'active' : ''}`}
-                            onClick={() => {
-                                setFilterStatus(status);
-                                console.log('💳 Filter:', status);
-                            }}
-                        >
-                            {status.charAt(0).toUpperCase() + status.slice(1)}
-                        </button>
-                    ))}
-                </div>
+      {/* Filter */}
+      <div className="payment-filter">
+        {['all', 'success', 'pending', 'failed'].map((status) => (
+          <button
+            key={status}
+            className={`filter-btn ${filterStatus === status ? 'active' : ''}`}
+            onClick={() => {
+              setFilterStatus(status);
+              console.log('💳 Filter:', status);
+            }}
+          >
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </button>
+        ))}
+      </div>
 
-                {/* Transactions Table */}
-                <div className="payment-table-card">
-                    <table className="payment-table">
-                        <thead>
-                            <tr>
-                                <th>Transaction ID</th>
-                                <th>Customer</th>
-                                <th>Amount</th>
-                                <th>Method</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredTransactions.map((txn) => (
-                                <tr key={txn.id} onClick={() => console.log('💳 Transaction:', txn)}>
-                                    <td className="txn-id">{txn.transactionId}</td>
-                                    <td>{txn.customer}</td>
-                                    <td className="amount">₹{txn.amount.toLocaleString()}</td>
-                                    <td>
-                                        <span className="method-badge">{txn.method}</span>
-                                    </td>
-                                    <td>
-                                        <span
-                                            className="status-badge"
-                                            style={{
-                                                background: statusColors[txn.status.toLowerCase()]?.bg,
-                                                color: statusColors[txn.status.toLowerCase()]?.color
-                                            }}
-                                        >
-                                            {txn.status}
-                                        </span>
-                                    </td>
-                                    <td className="date">{txn.date}</td>
-                                    <td>
-                                        <button className="view-btn" onClick={(e) => {
-                                            e.stopPropagation();
-                                            console.log('👁️ View transaction:', txn);
-                                        }}>
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+      {/* Transactions Table */}
+      <div className="payment-table-card">
+        <table className="payment-table">
+          <thead>
+            <tr>
+              <th>Transaction ID</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredTransactions.map((txn) => (
+              <tr key={txn.id} onClick={() => console.log('💳 Transaction:', txn)}>
+                <td className="txn-id">{txn.transactionId}</td>
+                <td>{txn.customer}</td>
+                <td className="amount">₹{txn.amount.toLocaleString()}</td>
+                <td>
+                  <span className="method-badge">{txn.method}</span>
+                </td>
+                <td>
+                  <span
+                    className="status-badge"
+                    style={{
+                      background: statusColors[txn.status.toLowerCase()]?.bg,
+                      color: statusColors[txn.status.toLowerCase()]?.color
+                    }}
+                  >
+                    {txn.status}
+                  </span>
+                </td>
+                <td className="date">{txn.date}</td>
+                <td>
+                  <button className="view-btn" onClick={(e) => {
+                    e.stopPropagation();
+                    console.log('👁️ View transaction:', txn);
+                  }}>
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-            <style>{`
+      <style>{`
         .payment-page {
           display: flex;
           flex-direction: column;
@@ -311,8 +308,8 @@ const Payment = () => {
           }
         }
       `}</style>
-        </AdminLayout>
-    );
+    </div >
+  );
 };
 
 export default Payment;

@@ -1,0 +1,16 @@
+import { Outlet } from "react-router-dom";
+import Navbar from "../pages/common/Navbar";
+import Footer from "../pages/common/Footer";
+
+const MainLayout = () => (
+  <>
+    <Navbar />
+    <main>
+      <Outlet />
+    </main>{" "}
+    {/* Yahan Home/About render honge */}
+    <Footer />
+  </>
+);
+
+export default MainLayout;
