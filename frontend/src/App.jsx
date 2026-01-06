@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import Analytics from "./pages/admin/Analytics";
-
 import Orders from "./pages/admin/Orders";
 import Settings from "./pages/admin/Settings";
 import Payment from "./pages/admin/Payment";
@@ -17,50 +16,44 @@ import AdminLayout from "./layouts/AdminLayout";
 import Products from "./pages/Products";
 import AllProducts from "./pages/AllProducts";
 import Contact from "./pages/Contact";
+import { ToastContainer } from 'react-toastify' ;
+import 'react-toastify/dist/ReactToastify.css' ;
 
-// export const backendUrl = import.meta.env.VITE_BACKEND_URL;
+export const backendUrl = import.meta.env.VITE_BACKEND_URL ;
+
 function App() {
   return (
     <>
-      <div>
-        <AllProducts />
-        <Routes>
-          {/* --- PUBLIC ROUTES (With Main Navbar & Footer) --- */}
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-            {/* <Route path="/register" element={<Register />} /> */}
-            {/* <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/verify-email/:token" element={<VerifyEmail />} /> */}
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/product" element={<Products />} />
+      <ToastContainer />
+      <Routes>
+        {/* --- PUBLIC ROUTES (With Main Navbar & Footer) --- */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/product" element={<Products />} />
+          <Route path="/all-products" element={<AllProducts />} />
+        </Route>
 
+        {/* --- ADMIN ROUTES --- */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />{" "}
+          {/* /admin par ye khulega */}
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="products" element={<Products />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="setting" element={<Settings />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="enquiry" element={<Enquiry />} />
+          <Route path="marketing" element={<Marketing />} />
+          <Route path="user" element={<User />} />
+        </Route>
 
-
-          </Route>
-
-          {/* --- ADMIN ROUTES --- */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Dashboard />} />{" "}
-            {/* /admin par ye khulega */}
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="analytics" element={<Analytics />} />
-            <Route path="products" element={<Products />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="setting" element={<Settings />} />
-            <Route path="payment" element={<Payment />} />
-            <Route path="enquiry" element={<Enquiry />} />
-            <Route path="marketing" element={<Marketing />} />
-            <Route path="user" element={<User />} />
-          </Route>
-
-          {/* --- 404 NOT FOUND --- */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
+        {/* --- 404 NOT FOUND --- */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
   );
 }
