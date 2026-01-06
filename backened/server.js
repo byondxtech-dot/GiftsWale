@@ -4,10 +4,11 @@ import cors from 'cors' ;
 import { configDotenv } from 'dotenv';
 configDotenv() ;
 
+import DBConnection from './config/database.js';
 import userRouter from './routes/userRoutes.js';
+const PORT = process.env.PORT || 4000 ;
 
-const PORT = process.env.PORT || 6000 ;
-
+DBConnection() ;
 const app = express() ;
 app.use(express.json()) ;
 app.use(cors()) ;

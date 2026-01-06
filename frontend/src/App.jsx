@@ -11,11 +11,13 @@ import Marketing from './pages/admin/Marketing'
 import User from './pages/admin/User'
 import NotFound from './pages/NotFound'
 
+import { Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+// export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 function App() {
   return (
     <>
       <div>
-
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/admin/dashboard' element={<Dashboard />} />
@@ -32,8 +34,12 @@ function App() {
       </div>
 
 
+        
+       
+ 
+      
     </>
-  )
+  );
 }
 
-export default App
+export default App;
