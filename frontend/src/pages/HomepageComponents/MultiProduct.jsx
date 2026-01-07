@@ -1,73 +1,75 @@
 const categories = [
   {
-    title: "Anniversary Gifts",
-    image: "https://picsum.photos/100?1",
+    title: "Birthday",
+    image: "https://picsum.photos/200?1",
   },
   {
-    title: "Birthday Gifts",
-    image: "https://picsum.photos/100?2",
+    title: "Lohri Gifts",
+    image: "https://picsum.photos/200?2",
   },
   {
-    title: "Birthday Cakes",
-    image: "https://picsum.photos/100?3",
+    title: "Flowers",
+    image: "https://picsum.photos/200?3",
   },
   {
-    title: "New Offers",
-    image: "https://picsum.photos/100?4",
+    title: "Cakes",
+    image: "https://picsum.photos/200?4",
   },
   {
-    title: "Anniversary Gifts",
-    image: "https://picsum.photos/100?5",
+    title: "Same Day Delivery",
+    image: "https://picsum.photos/200?5",
   },
   {
-    title: "Birthday Gifts",
-    image: "https://picsum.photos/100?6",
+    title: "Luxe",
+    image: "https://picsum.photos/200?6",
   },
   {
-    title: "Birthday Cakes",
-    image: "https://picsum.photos/100?7",
+    title: "Corporate Gifts",
+    image: "https://picsum.photos/200?7",
+  },
+  {
+    title: "Balloon Decor",
+    image: "https://picsum.photos/200?8",
+  },
+  {
+    title: "Special Gifts",
+    image: "https://picsum.photos/200?9",
   },
 ];
 
 export default function MultiProduct() {
   return (
-    <div className="w-full bg-white">
-      {/* 🔹 HEADING */}
-      <div className="max-w-7xl mx-auto px-4 pt-4 flex items-center justify-between">
-        <h2 className="text-lg sm:text-2xl font-semibold">
-          New Products & Offers
-        </h2>
-        <button className="text-sm text-pink-600 font-medium">View All</button>
-      </div>
-
-      {/* 🔹 CATEGORY ROW */}
-      <section className="py-4">
-        <div className="max-w-7xl mx-auto px-4">
-          {/* Horizontal Scroll */}
-          <div className="flex gap-4 overflow-x-auto scrollbar-hide md:justify-center">
-            {categories.map((item, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center min-w-[90px]"
-              >
-                {/* Image Box */}
-                <div className="w-20 h-20 sm:w-31 sm:h-31 rounded-xl overflow-hidden border bg-gray-100 shadow-sm">
+    <div className="w-full bg-white py-8">
+      {/* Category Grid - Full Width */}
+      <div className="w-full px-4 lg:px-8">
+        {/* Horizontal Scroll on mobile, Full width grid on desktop */}
+        <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2 md:grid md:grid-cols-9 md:gap-4 lg:gap-6">
+          {categories.map((item, index) => (
+            <a
+              href={`/category/${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+              key={index}
+              className="flex flex-col items-center min-w-[110px] md:min-w-0 cursor-pointer group"
+            >
+              {/* Card with gradient border effect */}
+              <div className="relative p-[2px] rounded-2xl bg-gradient-to-br from-amber-200 via-amber-100 to-amber-50 shadow-sm hover:shadow-lg transition-shadow">
+                <div className="w-28 h-28 sm:w-32 sm:h-32 lg:w-28 lg:h-28 xl:w-32 xl:h-32 rounded-2xl overflow-hidden bg-white">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover hover:scale-105 transition"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-
-                {/* Text */}
-                <p className="text-[11px] sm:text-sm mt-2 text-center font-medium">
-                  {item.title}
-                </p>
               </div>
-            ))}
-          </div>
+
+              {/* Category Name */}
+              <p className="text-sm sm:text-base mt-3 text-center font-medium text-gray-700 group-hover:text-gray-900 transition-colors leading-tight">
+                {item.title}
+              </p>
+            </a>
+          ))}
         </div>
-      </section>
+      </div>
     </div>
   );
 }
+

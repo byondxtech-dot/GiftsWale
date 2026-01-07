@@ -10,15 +10,15 @@ export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   const user = await userModel.findOne({ email });
-  
-console.log(user);
+
+  console.log(user);
 
   // Prevent email enumeration
   if (!user) {
     return res.status(200).json({
       message: "If account exists, reset link sent"
     });
-  } ;
+  };
 
 
   const resetToken = crypto.randomBytes(32).toString("hex");

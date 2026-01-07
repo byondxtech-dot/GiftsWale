@@ -1,160 +1,155 @@
-import React from "react";
-import { Search, ShoppingCart, ArrowDown, User, Menu } from "lucide-react";
+import React, { useState } from "react";
+import { Search, ShoppingCart, ChevronDown, User, Menu } from "lucide-react";
+import Logo from "../../assets/lgo file giftswale.jpg";
 
 const Navbar = () => {
-  //   const categories = [
-  //     "All",
-  //     "Cakes",
-  //     "Flowers",
-  //     "Plants",
-  //     "Personalised",
-  //     "Birthday",
-  //   ];
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All products");
+
+  const categories = [
+    "All products",
+    "Cakes",
+    "Flowers",
+    "Plants",
+    "Personalised",
+    "Birthday",
+    "Anniversary",
+    "Gifts",
+  ];
 
   return (
-    <header className="w-full bg-white sticky top-0 z-50 shadow-sm ">
-      {/* Top Navbar */}
-      <div className="flex items-center justify-between px-4 md:px-10 py-4">
-        {/* Left */}
-        <div className="flex items-center gap-8">
-          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-            Aakash
-          </h1>
+    <header className="w-full bg-white sticky top-0 z-50 border-b border-gray-200">
+      {/* Main Navbar */}
+      <div className="flex items-center px-4 lg:px-8 py-4 gap-5">
+        {/* Logo */}
+        <a href="/" className="flex-shrink-0">
+          <img
+            src={Logo}
+            alt="GiftsWale"
+            className="h-12 w-auto object-contain"
+          />
+        </a>
 
-          <div className="border-2 rounded flex gap-4 p-2">
-            <Menu size={22} className="cursor-pointer text-black-600 " />
-            <p className="text-black-600 text-[16px]">Menu</p>
+        {/* Menu Button */}
+        <button className="hidden md:flex items-center gap-2 bg-gray-900 text-white px-5 py-2.5 rounded-md hover:bg-gray-800 transition-colors flex-shrink-0">
+          <Menu size={18} />
+          <span className="font-medium text-base">Menu</span>
+        </button>
+
+        {/* Search Bar  */}
+        <div className="hidden md:flex max-w-3xl items-center border border-gray-300 rounded-sm overflow-hidden bg-white">
+          {/* Category Dropdown */}
+          <div className="relative flex-shrink-0">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center gap-2 px-4 py-2.5 bg-gray-50 border-r border-gray-300 hover:bg-gray-100 transition-colors"
+            >
+              <span className="text-base text-gray-700 whitespace-nowrap">
+                {selectedCategory}
+              </span>
+              <ChevronDown
+                size={16}
+                className={`text-gray-500 transition-transform ${isDropdownOpen ? "rotate-180" : ""
+                  }`}
+              />
+            </button>
+
+            {/* Dropdown Menu */}
+            {isDropdownOpen && (
+              <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                {categories.map((category, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      setIsDropdownOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors first:rounded-t-md last:rounded-b-md"
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-        </div>
-        {/*        <Menu className="md:hidden cursor-pointer text-gray-600" />*/}
 
-        {/* Search */}
-        <div className="hidden md:flex items-center w-[70%] bg-gray-50 border rounded pl-2 py-4 shadow-inner pr-8 ml-9 h-12">
-          <div className=" flex w-[160px] gap-4 pr-5">
-            <a href="#" className="text-black-500 text-[13px] mt-2">
-              All Product{" "}
-            </a>
-            <ArrowDown size={32} className=" text-black-700 mt-1" />
-            <div className="border-1 h-10"></div>
-          </div>
-
+          {/* Search Input */}
           <input
             type="text"
-            placeholder="Search for anything"
-            className="w-90 bg-transparent px-3 outline-none text-xl"
+            placeholder="Search for anything..."
+            className="flex-1 px-6 py-3 outline-none text-base text-gray-600 placeholder-gray-400 min-w-[500px]"
           />
-          <Search size={40} className="text-black-500 " />
+
+          {/* Search Icon */}
+          <button className="px-4 py-2.5 hover:bg-gray-50 transition-colors flex-shrink-0">
+            <Search size={20} className="text-gray-500" />
+          </button>
         </div>
 
-        {/* Icons */}
-        <div className="flex items-center gap-5 mx-4 mr-4">
-          <div>
-            <User
-              size={24}
-              className="cursor-pointer text-gray-700 hover:text-green-600 transition"
-            />
-            <p>login</p>
-          </div>
+        {/* Spacer */}
+        <div className="hidden md:flex flex-1"></div>
 
-          <div className="relative">
-            <ShoppingCart
-              size={24}
-              className="cursor-pointer text-gray-700 hover:text-green-600 transition"
-            />
-            <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs px-1.5 rounded-full">
-              2
-            </span>
-            <p>cart</p>
-          </div>
+        {/* Navigation Links */}
+        <div className="hidden md:flex items-center gap-6 mr-6">
+          <a
+            href="/catalog"
+            className="text-gray-700 hover:text-gray-900 font-medium text-base transition-colors"
+          >
+            Catalog
+          </a>
+          <a
+            href="/orders"
+            className="text-gray-700 hover:text-gray-900 font-medium text-base transition-colors"
+          >
+            Orders
+          </a>
+        </div>
+
+        {/* Right Section - Icons */}
+        <div className="flex items-center gap-6 flex-shrink-0">
+          {/* Login */}
+          <a
+            href="/login"
+            className="flex flex-col items-center gap-0.5 text-gray-700 hover:text-gray-900 transition-colors cursor-pointer"
+          >
+            <User size={24} strokeWidth={1.5} />
+            <span className="text-xs font-medium">Login</span>
+          </a>
+
+          {/* Cart */}
+          <a
+            href="/cart"
+            className="flex flex-col items-center gap-0.5 text-gray-700 hover:text-gray-900 transition-colors cursor-pointer"
+          >
+            <div className="relative">
+              <ShoppingCart size={24} strokeWidth={1.5} />
+              <span className="absolute -top-2 -right-2 bg-green-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                0
+              </span>
+            </div>
+            <span className="text-xs font-medium">Cart</span>
+          </a>
+
+          {/* Mobile Menu Button */}
+          <button className="md:hidden p-2 hover:bg-gray-100 rounded-md transition-colors">
+            <Menu size={22} className="text-gray-700" />
+          </button>
         </div>
       </div>
 
       {/* Mobile Search */}
       <div className="px-4 pb-3 md:hidden">
-        <div className="flex items-center bg-gray-50 border rounded-full px-4 py-2">
-          <Search size={18} className="text-gray-400" />
+        <div className="flex items-center border border-gray-300 rounded-md overflow-hidden bg-white">
           <input
             type="text"
-            placeholder="Search gifts"
-            className="w-full bg-transparent px-3 outline-none text-sm"
+            placeholder="Search for anything..."
+            className="flex-1 px-4 py-2.5 outline-none text-sm text-gray-700 placeholder-gray-400"
           />
+          <button className="px-4 py-2.5 hover:bg-gray-50 transition-colors">
+            <Search size={18} className="text-gray-500" />
+          </button>
         </div>
       </div>
-
-      {/* Categories */}
-      <nav className="flex gap-6 px-4 md:px-10 py-3 text-sm font-semibold border-t overflow-x-auto whitespace-nowrap">
-        <span>sale</span>
-        <span>
-          gift{" "}
-          <select className=" ml-[-15px] text-xl mt-[-6px]">
-            <option></option>
-            <option>a</option>
-            <option>b</option>
-          </select>
-        </span>
-        <span>
-          gift1
-          <select className=" ml-[-15px] text-xl mt-[-6px]">
-            <option></option>
-            <option>a</option>
-            <option>b</option>
-          </select>
-        </span>
-        <span>gift2</span>
-        <span>gift3</span>
-        <span>
-          Deals
-          <select className=" ml-[-15px] text-xl mt-[-6px]">
-            <option></option>
-            <option>a</option>
-            <option>b</option>
-          </select>
-        </span>
-        <span>
-          More
-          <select className=" ml-[-15px] text-xl mt-[-6px]">
-            <option></option>
-            <option>a</option>
-            <option>b</option>
-          </select>{" "}
-        </span>
-        <div className=" flex gap-6 ml-42">
-          <span>
-            currency[INR ₹]
-            <select className=" ml-[-15px] text-xl mt-[-6px] outline-none">
-              <option></option>
-              <option>a</option>
-              <option>b</option>
-            </select>{" "}
-          </span>
-          <span>
-            language
-            <select className=" ml-[-15px] text-xl mt-[-6px]">
-              <option></option>
-              <option>a</option>
-              <option>b</option>
-            </select>{" "}
-          </span>
-          <span>
-            dark mode
-            <select className=" ml-[-15px] text-xl mt-[-6px]">
-              <option></option>
-              <option>a</option>
-              <option>b</option>
-            </select>{" "}
-          </span>
-        </div>
-        {/*categories.map((item, index) => (
-          <span
-            key={index}
-            className="relative cursor-pointer text-gray-700 hover:text-green-600 transition
-            after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-[2px]
-            after:bg-green-600 after:transition-all hover:after:w-full"
-          >
-            {item}
-          </span>
-        ))*/}
-      </nav>
     </header>
   );
 };
