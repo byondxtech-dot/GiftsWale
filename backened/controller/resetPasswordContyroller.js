@@ -20,7 +20,6 @@ export const forgotPassword = async (req, res) => {
     });
   };
 
-
   const resetToken = crypto.randomBytes(32).toString("hex");
 
   user.resetPasswordToken = crypto
@@ -31,8 +30,9 @@ export const forgotPassword = async (req, res) => {
   user.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 min
 
   await user.save({ validateBeforeSave: false });
+  
 
-  const resetUrl = `http://localhost:6000/reset-password/${resetToken}`;
+  const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
 
   await sendEmail({
     to: user.email,

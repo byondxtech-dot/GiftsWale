@@ -17,6 +17,8 @@ import MainLayout from "./layouts/MainLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import Products from "./pages/Products";
 import Contact from "./pages/Contact";
+import ForgotPassword from "./pages/ForgotPassword";
+import ChangePassword from "./pages/ChangePassword";
 
 // export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 function App() {
@@ -29,6 +31,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/forgotpassword" element = {<ForgotPassword/>}/>
+            <Route path="/reset-password/:token" element ={<ChangePassword/>}/>
             <Route path="/contact" element={<Contact />} />
             <Route path="/product" element={<Products />} />
           </Route>

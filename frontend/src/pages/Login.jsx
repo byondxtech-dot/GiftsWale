@@ -160,6 +160,7 @@ const Login = () => {
             {/* Forgot password & toggle */}
             <div className="flex justify-between items-center pt-2">
               <button
+              onClick={()=>navigate('/forgotpassword')}
                 style={{ display: currentState === "Login" ? "block" : "none" }}
                 type="button"
                 className="text-sm text-gray-500 hover:text-blue-600 transition-colors duration-300 

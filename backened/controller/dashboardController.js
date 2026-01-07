@@ -55,6 +55,7 @@ export const getDashboardStats = async (req, res) => {
                     previousValue: Math.round(totalProducts * 0.85),
                     trend: 'up'
                 }
+                
             },
             categoryStats,
             topProducts,
