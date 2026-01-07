@@ -8,19 +8,42 @@ const Dashboard = () => {
     const [stats, setStats] = useState(null);
     const [salesData, setSalesData] = useState([]);
     const [revenueData, setRevenueData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Fetch all data on mount
-        const statsData = getStats();
-        const revenue = getRevenueData();
-        const sales = getSalesByCategory();
+        const fetchData = async () => {
+            try {
+                const [statsData, sales] = await Promise.all([
+                    getStats(),
+                    getSalesByCategory()
+                ]);
+                const revenue = getRevenueData(); // Still mock data
 
-        setStats(statsData);
-        setRevenueData(revenue);
-        setSalesData(sales);
+                setStats(statsData);
+                setRevenueData(revenue);
+                setSalesData(sales);
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+            }
+            setLoading(false);
+        };
+
+        fetchData();
     }, []);
 
-    if (!stats) return <div>Loading...</div>;
+    if (loading) return (
+        <div className="dashboard-loading">
+            <div className="spinner"></div>
+            <p>Loading dashboard...</p>
+        </div>
+    );
+
+    if (!stats) return (
+        <div className="dashboard-loading">
+            <p>No data available</p>
+        </div>
+    );
 
     // Calculate total sales for pie chart center
     const totalSales = salesData.reduce((sum, item) => sum + item.value, 0);

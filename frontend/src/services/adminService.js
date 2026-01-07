@@ -2,19 +2,25 @@
 // Database se connect hone ke baad ye functions update honge
 
 import {
-    dashboardStats,
     revenueData,
-    salesByCategory,
     recentInvoices,
     topProducts,
-    products,
     orders
 } from '../data/adminData';
 
-// Dashboard Stats
-export const getStats = () => {
-    console.log('📊 Fetching Dashboard Stats:', dashboardStats);
-    return dashboardStats;
+const API_BASE = 'http://localhost:4000/api';
+
+// Dashboard Stats - Real API
+export const getStats = async () => {
+    try {
+        const response = await fetch(`${API_BASE}/dashboard/stats`);
+        const data = await response.json();
+        console.log('📊 Fetching Dashboard Stats:', data);
+        return data.stats || null;
+    } catch (error) {
+        console.error('Error fetching dashboard stats:', error);
+        return null;
+    }
 };
 
 export const getRevenueData = () => {
@@ -22,9 +28,28 @@ export const getRevenueData = () => {
     return revenueData;
 };
 
-export const getSalesByCategory = () => {
-    console.log('🥧 Fetching Sales by Category:', salesByCategory);
-    return salesByCategory;
+export const getSalesByCategory = async () => {
+    try {
+        const response = await fetch(`${API_BASE}/dashboard/sales-by-category`);
+        const data = await response.json();
+        console.log('🥧 Fetching Sales by Category:', data);
+        return data.salesData || [];
+    } catch (error) {
+        console.error('Error fetching sales by category:', error);
+        return [];
+    }
+};
+
+export const getTopProducts = async () => {
+    try {
+        const response = await fetch(`${API_BASE}/dashboard/stats`);
+        const data = await response.json();
+        console.log('🔥 Fetching Top Products:', data.topProducts);
+        return data.topProducts || [];
+    } catch (error) {
+        console.error('Error fetching top products:', error);
+        return topProducts; // Fallback to mock
+    }
 };
 
 // Invoices/Orders
@@ -57,39 +82,62 @@ export const deleteInvoice = (id) => {
     return { success: true, deletedId: id };
 };
 
-// Products
-export const getProducts = () => {
-    console.log('📦 Fetching Products:', products);
-    return products;
+// Products - Real API calls
+
+export const getProducts = async () => {
+    try {
+        const response = await fetch(`${API_BASE}/products`);
+        const data = await response.json();
+        console.log('📦 Fetching Products:', data);
+        return data.products || [];
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return [];
+    }
 };
 
-export const getTopProducts = () => {
-    console.log('🔥 Fetching Top Products:', topProducts);
-    return topProducts;
+export const createProduct = async (formData) => {
+    try {
+        const response = await fetch(`${API_BASE}/products`, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        console.log('✅ Product Created:', data);
+        return data;
+    } catch (error) {
+        console.error('Error creating product:', error);
+        throw error;
+    }
 };
 
-export const createProduct = (productData) => {
-    console.log('➕ Creating Product:', productData);
-    const newProduct = {
-        id: products.length + 1,
-        ...productData,
-        status: 'Active'
-    };
-    console.log('✅ Product Created:', newProduct);
-    return newProduct;
+export const updateProduct = async (id, formData) => {
+    try {
+        const response = await fetch(`${API_BASE}/products/${id}`, {
+            method: 'PUT',
+            body: formData
+        });
+        const data = await response.json();
+        console.log('✅ Product Updated:', data);
+        return data;
+    } catch (error) {
+        console.error('Error updating product:', error);
+        throw error;
+    }
 };
 
-export const updateProduct = (id, productData) => {
-    console.log(`📝 Updating Product ${id}:`, productData);
-    const updatedProduct = { id, ...productData };
-    console.log('✅ Product Updated:', updatedProduct);
-    return updatedProduct;
-};
-
-export const deleteProduct = (id) => {
-    console.log(`🗑️ Deleting Product ${id}`);
-    console.log('✅ Product Deleted');
-    return { success: true, deletedId: id };
+export const deleteProduct = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE}/products/${id}`, {
+            method: 'DELETE'
+        });
+        const data = await response.json();
+        console.log('🗑️ Product Deleted:', data);
+        return data;
+    } catch (error) {
+        console.error('Error deleting product:', error);
+        throw error;
+    }
 };
 
 // Orders

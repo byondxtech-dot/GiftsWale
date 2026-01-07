@@ -9,6 +9,7 @@ import Payment from "./pages/admin/Payment";
 import Enquiry from "./pages/admin/Enquiry";
 import Marketing from "./pages/admin/Marketing";
 import User from "./pages/admin/User";
+import AdminProducts from "./pages/admin/Products";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Home from "./pages/Home";
@@ -28,16 +29,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
-            {/* <Route path="/register" element={<Register />} /> */}
-            {/* <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/verify-email/:token" element={<VerifyEmail />} /> */}
             <Route path="/contact" element={<Contact />} />
             <Route path="/product" element={<Products />} />
-
-
-
           </Route>
 
           {/* --- ADMIN ROUTES --- */}
@@ -46,7 +39,7 @@ function App() {
             {/* /admin par ye khulega */}
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
-            <Route path="products" element={<Products />} />
+            <Route path="products" element={<AdminProducts />} />
             <Route path="orders" element={<Orders />} />
             <Route path="setting" element={<Settings />} />
             <Route path="payment" element={<Payment />} />

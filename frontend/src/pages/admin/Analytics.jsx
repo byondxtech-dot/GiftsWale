@@ -6,20 +6,38 @@ const Analytics = () => {
   const [salesData, setSalesData] = useState([]);
   const [stats, setStats] = useState(null);
   const [selectedPeriod, setSelectedPeriod] = useState('monthly');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const revenue = getRevenueData();
-    const sales = getSalesByCategory();
-    const statsData = getStats();
+    const fetchData = async () => {
+      try {
+        const [statsData, sales] = await Promise.all([
+          getStats(),
+          getSalesByCategory()
+        ]);
+        const revenue = getRevenueData(); // Still mock data
 
-    setRevenueData(revenue);
-    setSalesData(sales);
-    setStats(statsData);
+        setStats(statsData);
+        setSalesData(sales || []);
+        setRevenueData(revenue);
+      } catch (error) {
+        console.error('Error fetching analytics data:', error);
+      }
+      setLoading(false);
+    };
 
+    fetchData();
     console.log('📊 Analytics Page Loaded');
   }, []);
 
-  if (!stats) return <div>Loading...</div>;
+  if (loading) return (
+    <div className="analytics-loading">
+      <div className="spinner"></div>
+      <p>Loading analytics...</p>
+    </div>
+  );
+
+  if (!stats) return <div>No data available</div>;
 
   const totalRevenue = revenueData.reduce((sum, item) => sum + item.revenue, 0);
   const totalOrders = revenueData.reduce((sum, item) => sum + item.orders, 0);

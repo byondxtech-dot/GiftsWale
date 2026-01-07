@@ -1,9 +1,24 @@
-import { useState } from 'react';
-import { getTopProducts, deleteProduct } from '../../services/adminService';
+import { useState, useEffect } from 'react';
+import { getTopProducts } from '../../services/adminService';
 
 const TopProducts = () => {
-    const [products] = useState(() => getTopProducts());
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const data = await getTopProducts();
+                setProducts(data || []);
+            } catch (error) {
+                console.error('Error fetching top products:', error);
+                setProducts([]);
+            }
+            setLoading(false);
+        };
+        fetchProducts();
+    }, []);
 
     const handleSearch = () => {
         console.log('🔍 Searching for:', searchTerm);
@@ -12,6 +27,10 @@ const TopProducts = () => {
     const handleProductClick = (product) => {
         console.log('📦 Product clicked:', product);
     };
+
+    const filteredProducts = products.filter(p =>
+        p.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className="admin-products-card">
@@ -28,36 +47,40 @@ const TopProducts = () => {
                 </div>
             </div>
             <div className="admin-products-list">
-                {products.map((product) => (
-                    <div
-                        key={product.id}
-                        className="admin-product-item"
-                        onClick={() => handleProductClick(product)}
-                        style={{ cursor: 'pointer' }}
-                    >
-                        <img
-                            src={product.image}
-                            alt={product.name}
-                            className="admin-product-img"
-                            onError={(e) => {
-                                e.target.src = 'https://via.placeholder.com/48x48?text=Gift';
-                            }}
-                        />
-                        <div className="admin-product-info">
-                            <div className="admin-product-name">{product.name}</div>
-                            <div className="admin-product-category">{product.category}</div>
+                {loading ? (
+                    <div className="loading-text">Loading...</div>
+                ) : filteredProducts.length === 0 ? (
+                    <div className="empty-text">No products found</div>
+                ) : (
+                    filteredProducts.map((product) => (
+                        <div
+                            key={product._id || product.id}
+                            className="admin-product-item"
+                            onClick={() => handleProductClick(product)}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <img
+                                src={product.images?.[0]?.url || product.image || 'https://via.placeholder.com/48x48?text=Gift'}
+                                alt={product.name}
+                                className="admin-product-img"
+                                onError={(e) => {
+                                    e.target.src = 'https://via.placeholder.com/48x48?text=Gift';
+                                }}
+                            />
+                            <div className="admin-product-info">
+                                <div className="admin-product-name">{product.name}</div>
+                                <div className="admin-product-category">{product.category}</div>
+                            </div>
+                            <span className="admin-product-badge">
+                                ₹{product.price}
+                            </span>
                         </div>
-                        <span className="admin-product-badge">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                            </svg>
-                            {product.percentage}%
-                        </span>
-                    </div>
-                ))}
+                    ))
+                )}
             </div>
         </div>
     );
 };
 
 export default TopProducts;
+
