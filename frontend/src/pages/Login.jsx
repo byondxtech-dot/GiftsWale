@@ -2,7 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 // import { backendUrl } from "../App";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+// Remove this duplicate import
+// import { backendUrl } from "../App";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
+    const navigate = useNavigate()
   const [currentState, setCurrentState] = useState("Login");
   const [isHovered, setIsHovered] = useState(false);
   const [name, setName] = useState("");
@@ -22,25 +29,36 @@ const Login = () => {
           email,
           password,
         });
-        console.log(res);
+
+        if (res.data.success) {
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("isAuth", "true");
+          console.log(`${currentState} success`);
+          toast.success("User Signup Successfully");
+          setCurrentState("Login");
+        } else {
+          console.log(res.data.msg);
+          toast.error(res.data.msg);
+        }
       } else {
         // LOGIN
         res = await axios.post(backendUrl + "/api/user/login", {
           email,
           password,
         });
-      }
 
-      if (res.data.success) {
-        // ✅ AUTH SUCCESS
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("isAuth", "true");
-        alert("signup Succesfull");
+        console.log(res, "this is data responce");
 
-        console.log(`${currentState} success`);
-      } else {
-        console.log(res.data.msg);
-        alert(res.data.msg);
+        if (res.data.success) {
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("isAuth", "true");
+          console.log(`${currentState} success`);
+          navigate('/')
+
+        } else {
+          console.log(res.data.msg);
+          toast.error(res.data.msg);
+        }
       }
     } catch (error) {
       console.log("authError", error.response?.data || error.message);

@@ -10,29 +10,32 @@ export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   const user = await userModel.findOne({ email });
+  
+console.log(user);
 
   // Prevent email enumeration
-  if (!userModel) {
+  if (!user) {
     return res.status(200).json({
       message: "If account exists, reset link sent"
     });
-  }
+  } ;
+
 
   const resetToken = crypto.randomBytes(32).toString("hex");
 
-  userModel.resetPasswordToken = crypto
+  user.resetPasswordToken = crypto
     .createHash("sha256")
     .update(resetToken)
     .digest("hex");
 
-  userModel.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 min
+  user.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 min
 
-  await userModel.save({ validateBeforeSave: false });
+  await user.save({ validateBeforeSave: false });
 
   const resetUrl = `http://localhost:6000/reset-password/${resetToken}`;
 
   await sendEmail({
-    to: userModel.email,
+    to: user.email,
     subject: "Password Reset",
     text: `Reset your password using this link:\n\n${resetUrl}\n\nThis link expires in 15 minutes.`
   });
