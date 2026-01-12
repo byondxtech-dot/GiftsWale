@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import Analytics from "./pages/admin/Analytics";
 
@@ -16,6 +16,7 @@ import Home from "./pages/Home";
 import MainLayout from "./layouts/MainLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import Products from "./pages/Products";
+import AllProduct from "./pages/AllProducts";
 import Contact from "./pages/Contact";
 
 // export const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -23,6 +24,7 @@ function App() {
   return (
     <>
       <div>
+        <AllProduct />
         <Routes>
           {/* --- PUBLIC ROUTES (With Main Navbar & Footer) --- */}
           <Route element={<MainLayout />}>
