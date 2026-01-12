@@ -13,7 +13,7 @@ const DBConnection  = async() =>{
     };
     // console.log(process.env.MONGODB_URL);
     
-    await mongoose.connect(process.env.MONGODB_URL, options) ;
+    await mongoose.connect(process.env.MONGO_URL, options) ;
 }
 
 export default DBConnection ;
