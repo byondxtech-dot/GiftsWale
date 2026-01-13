@@ -1,6 +1,6 @@
 
 
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import userModel from "../models/userModel.js";
 import sendEmail from "../nodemailer/nodeMailer.js";
